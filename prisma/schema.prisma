@@ -8,21 +8,18 @@ datasource db {
 }
 
 model User {
-  id       String        @id @default(uuid())
-  name     String        @db.VarChar(255)
-  email    String        @unique
-  photo    String?       @default("default.png")
-  verified Boolean?      @default(false)
-  address  Address[]
-  password String
-  role     RoleEnumType? @default(customer)
-
-  verificationCode String? @unique @db.Text
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  Order     Order?   @relation(fields: [orderId], references: [id])
-  orderId   String?
+  id               String        @id @default(uuid())
+  name             String        @db.VarChar(255)
+  email            String        @unique
+  photo            String?       @default("default.png")
+  verified         Boolean?      @default(false)
+  password         String
+  role             RoleEnumType? @default(customer)
+  verificationCode String?       @unique @db.Text
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+  orders           Order[]
+  addresses        Address[]
 
   @@unique([email, verificationCode])
   @@index([email, verificationCode])
@@ -30,30 +27,43 @@ model User {
 }
 
 model Product {
-  id          String     @id @default(uuid())
+  id          String       @id @default(uuid())
   name        String
   description String?
   image       String?
-  rating      Float      @default(0.0)
+  rating      Float        @default(0.0)
   price       Int
   stock       Int
   category    Category[]
-  Order       Order?     @relation(fields: [orderId], references: [id])
-  orderId     String?
+  orderItems  OrderItem[]
 
   @@map(name: "products")
 }
 
 model Order {
-  id        String      @id @default(uuid())
-  products  Product[]
-  users     User[]
-  address   Address[]
-  createdAt DateTime    @default(now())
-  updatedAt DateTime    @updatedAt
-  status    OrderStatus
+  id         String      @id @default(uuid())
+  user       User        @relation(fields: [userId], references: [id])
+  userId     String
+  address    Address?    @relation(fields: [addressId], references: [id])
+  addressId  String?
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+  status     OrderStatus
+  orderItems OrderItem[] // New field for order items
+  totalPrice Float
 
   @@map(name: "orders")
+}
+
+model OrderItem {
+  id        String  @id @default(uuid())
+  order     Order   @relation(fields: [orderId], references: [id])
+  orderId   String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId String
+  quantity  Int
+
+  @@map(name: "order_items")
 }
 
 model Category {
@@ -65,15 +75,14 @@ model Category {
 
 model Address {
   id         String  @id @default(uuid())
+  user       User    @relation(fields: [userId], references: [id])
+  userId     String
   street     String
   city       String
   state      String
   postalCode String
   country    String
-  User       User?   @relation(fields: [userId], references: [id])
-  userId     String?
-  Order      Order?  @relation(fields: [orderId], references: [id])
-  orderId    String?
+  orders     Order[]
 
   @@map(name: "addresses")
 }

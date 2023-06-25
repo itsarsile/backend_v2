@@ -43,10 +43,15 @@ export const getAllProductsHandler = async (
   next: NextFunction,
 ) => {
   try {
-    const { orderBy, orderByField, search } = req.query;
+    const { orderBy, orderByField, search, page, limit} = req.query;
+    const pageNumber = parseInt(page as string, 10) || 1;
+    const limitNumber = parseInt(limit as string, 10) || 10;
+    const offset = (pageNumber - 1) * limitNumber
     const products = await getAllProducts(
       orderBy as Prisma.SortOrder || undefined,
-      orderByField as string, search as string
+      orderByField as string, search as string,
+      offset,
+      limitNumber,
     );
     res.status(200).json({
       status: "success",
@@ -91,8 +96,8 @@ export const updateProductHandler = async (
       image: `http://${config.get<string>("db_host")}:${
         config.get<string>("port")
       }/img/${image}`,
-      stock: Number(req.body.stock),
-      price: Number(req.body.price),
+      stock: Number(req.body.stock) || undefined,
+      price: Number(req.body.price) || undefined,
     });
 
     res.status(200).json({

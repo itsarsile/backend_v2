@@ -3,6 +3,7 @@ import { CookieOptions, NextFunction, Request, Response } from 'express';
 import bcrypt from 'bcryptjs';
 import { LoginUserInput, RegisterUserInput } from '../schemas/user.schema';
 import {
+  createAddress,
   createUser,
   excludedFields,
   findUniqueUser,
@@ -61,10 +62,20 @@ export const registerUserHandler = async (
 
     const newUser = omit(user, excludedFields);
 
+    const address = await createAddress({
+      street: req.body.address.street,
+      city: req.body.address.city,
+      state: req.body.address.state,
+      postalCode: req.body.address.postalCode,
+      country: req.body.address.country,
+      user: { connect: { id: user.id }}
+    });
+
     res.status(201).json({
       status: 'success',
       data: {
         user: newUser,
+        address
       },
     });
   } catch (err: any) {

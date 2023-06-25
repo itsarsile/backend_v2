@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { updateUser } from '../services/user.service';
+import { getAddressByUserId } from '../services/address.service';
 
 export const getMeHandler = async (
   req: Request,
@@ -8,10 +9,12 @@ export const getMeHandler = async (
 ) => {
   try {
     const user = res.locals.user;
+    const address = await getAddressByUserId(user.id)
     res.status(200).status(200).json({
       status: 'success',
       data: {
         user,
+        address
       },
     });
   } catch (err: any) {

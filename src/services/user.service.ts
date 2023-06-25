@@ -33,6 +33,12 @@ export const findUniqueUser = async (
   })) as User;
 };
 
+export const createAddress = async (input: Prisma.AddressCreateInput) => {
+  return (await prisma.address.create({
+    data: input,
+  }));
+};
+
 export const signTokens = async (user: Prisma.UserCreateInput) => {
   redisClient.set(`${user.id}`, JSON.stringify(user), {
     EX: config.get<number>("redisCacheExpiresIn") * 60,
