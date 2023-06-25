@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import config from "config";
-import { createCategory, getAllCategory } from "../services/category.service";
+import { createCategory, getAllCategory, getCategoryById } from "../services/category.service";
 export const createCategoryHandler = async (
   req: Request,
   res: Response,
@@ -24,6 +24,26 @@ export const createCategoryHandler = async (
     next(err);
   }
 };
+
+export const getCategoryByIdHandler = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const categoryId = Number(req.params.id);
+    const category = await getCategoryById(categoryId);
+    res.status(200).json({
+      status: 'success',
+      data: {
+        category,
+      }
+    })
+
+  } catch (error) {
+    
+  }
+}
 
 export const getAllCategoryHandler = async (
   req: Request,

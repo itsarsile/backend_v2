@@ -8,12 +8,12 @@ datasource db {
 }
 
 model User {
-  id       String   @id @default(uuid())
-  name     String   @db.VarChar(255)
-  email    String   @unique
-  photo    String?  @default("default.png")
-  verified Boolean? @default(false)
-
+  id       String        @id @default(uuid())
+  name     String        @db.VarChar(255)
+  email    String        @unique
+  photo    String?       @default("default.png")
+  verified Boolean?      @default(false)
+  address  Address[]
   password String
   role     RoleEnumType? @default(customer)
 
@@ -21,7 +21,8 @@ model User {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  Order     Order[]
+  Order     Order?   @relation(fields: [orderId], references: [id])
+  orderId   String?
 
   @@unique([email, verificationCode])
   @@index([email, verificationCode])
@@ -37,9 +38,22 @@ model Product {
   price       Int
   stock       Int
   category    Category[]
-  Order       Order[]
+  Order       Order?     @relation(fields: [orderId], references: [id])
+  orderId     String?
 
   @@map(name: "products")
+}
+
+model Order {
+  id        String      @id @default(uuid())
+  products  Product[]
+  users     User[]
+  address   Address[]
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  status    OrderStatus
+
+  @@map(name: "orders")
 }
 
 model Category {
@@ -49,21 +63,20 @@ model Category {
   products Product[]
 }
 
-model Order {
-  id        String      @id @default(uuid())
-  product   Product     @relation(fields: [productId], references: [id])
-  productId String
-  quantity  Int
-  user      User        @relation(fields: [userId], references: [id])
-  userId    String
-  createdAt DateTime    @default(now())
-  updatedAt DateTime    @updatedAt
-  status    OrderStatus
+model Address {
+  id         String  @id @default(uuid())
+  street     String
+  city       String
+  state      String
+  postalCode String
+  country    String
+  User       User?   @relation(fields: [userId], references: [id])
+  userId     String?
+  Order      Order?  @relation(fields: [orderId], references: [id])
+  orderId    String?
 
-  @@map(name: "orders")
+  @@map(name: "addresses")
 }
-
-
 
 enum RoleEnumType {
   customer

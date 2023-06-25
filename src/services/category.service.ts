@@ -1,4 +1,4 @@
-import { Category, Prisma, PrismaClient, Product } from "@prisma/client";
+import { Category, Prisma, PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
@@ -12,6 +12,14 @@ export const getAllCategory = async () => {
   return (await prisma.category.findMany({
     include: {
       products: true,
+    }
+  }))
+}
+
+export const getCategoryById = async (categoryId: number) => {
+  return (await prisma.category.findUnique({
+    where: {
+      id: categoryId,
     }
   }))
 }

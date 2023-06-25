@@ -1,6 +1,6 @@
 import express from "express";
 import { deserializeUser } from "../middleware/deserializeUser";
-import { requireUser } from "../middleware/requireUser";
+import { requireUser, requireUserRole } from "../middleware/requireUser";
 import {
   createProductHandler,
   deleteProductHandler,
@@ -16,7 +16,7 @@ router.use(deserializeUser, requireUser);
 router
   .get("/", getAllProductsHandler)
   .get("/:id", getProductByIdHandler)
-  .post("/", upload.single("image"), createProductHandler)
+  .post("/", requireUserRole('seller'), upload.single("image"), createProductHandler)
   .delete("/:id", deleteProductHandler);
 
 export default router;

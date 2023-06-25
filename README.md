@@ -12,13 +12,13 @@ JWT Strategy implementation for managing authentication and authorization using 
 Clone the project
 
 ```bash
-  git clone https://link-to-project
+  git clone https://github.com/itsarsile/backend_v2
 ```
 
 Go to the project directory
 
 ```bash
-  cd my-project
+  cd backend_v2
 ```
 
 Install dependencies

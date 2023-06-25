@@ -8,7 +8,6 @@ import {
   getProductById,
   updateProduct,
 } from "../services/product.service";
-import { orderBy } from "lodash";
 
 export const createProductHandler = async (
   req: Request,

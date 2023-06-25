@@ -43,9 +43,9 @@ async function bootstrap() {
 
   // ROUTES
   app.use("/api/auth", authRouter);
+  app.use("/api/categories", categoryRouter);
   app.use("/api/users", userRouter);
   app.use("/api/products", productRouter);
-  app.use("/api/categories", categoryRouter);
 
   app.use("/img", express.static('src/uploads'))
 

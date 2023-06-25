@@ -1,0 +1,265 @@
+{
+    "client": "Thunder Client",
+    "collectionName": "Backend",
+    "dateExported": "2023-06-25T11:51:14.304Z",
+    "version": "1.1",
+    "folders": [
+        {
+            "_id": "b603be5e-8aa7-40ab-8159-06c3bfdb59aa",
+            "name": "Backend V2",
+            "containerId": "",
+            "created": "2023-06-25T11:42:25.759Z",
+            "sortNum": 10000
+        },
+        {
+            "_id": "bb37d21a-cf6e-4c5d-b128-e6d12bb0208a",
+            "name": "Categories",
+            "containerId": "b603be5e-8aa7-40ab-8159-06c3bfdb59aa",
+            "created": "2023-06-25T11:42:25.760Z",
+            "sortNum": 20000
+        },
+        {
+            "_id": "693affd0-1c05-45c8-8cdb-6bd95df99bf6",
+            "name": "Products",
+            "containerId": "b603be5e-8aa7-40ab-8159-06c3bfdb59aa",
+            "created": "2023-06-25T11:42:25.761Z",
+            "sortNum": 30000
+        },
+        {
+            "_id": "afe510c8-34f9-42c7-b0f2-b9930e6d80f7",
+            "name": "Users",
+            "containerId": "b603be5e-8aa7-40ab-8159-06c3bfdb59aa",
+            "created": "2023-06-25T11:42:25.762Z",
+            "sortNum": 40000
+        }
+    ],
+    "requests": [
+        {
+            "_id": "09375564-5d98-4fce-9f0b-27bef4df9b1d",
+            "colId": "836c895d-30f8-4685-b159-f77c7abc9d84",
+            "containerId": "bb37d21a-cf6e-4c5d-b128-e6d12bb0208a",
+            "name": "Get All Categories",
+            "url": "localhost:8000/api/categories",
+            "method": "GET",
+            "sortNum": 10000,
+            "created": "2023-06-25T11:42:25.759Z",
+            "modified": "2023-06-25T11:42:25.759Z",
+            "headers": [],
+            "params": [],
+            "docs": ""
+        },
+        {
+            "_id": "386c2e72-6d3b-4214-a3aa-8b51f22c5a17",
+            "colId": "836c895d-30f8-4685-b159-f77c7abc9d84",
+            "containerId": "bb37d21a-cf6e-4c5d-b128-e6d12bb0208a",
+            "name": "Create Categories (Admin Only)",
+            "url": "localhost:8000/api/categories",
+            "method": "POST",
+            "sortNum": 20000,
+            "created": "2023-06-25T11:42:25.760Z",
+            "modified": "2023-06-25T11:42:25.760Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "form": [
+                    {
+                        "name": "name",
+                        "value": "Handphone"
+                    }
+                ],
+                "files": [
+                    {
+                        "name": "image",
+                        "value": "/run/user/1000/doc/a57970b5/conditionals.png"
+                    }
+                ],
+                "type": "formdata"
+            },
+            "docs": ""
+        },
+        {
+            "_id": "5013b756-0e7a-4aee-9599-3370cc3e18fd",
+            "colId": "836c895d-30f8-4685-b159-f77c7abc9d84",
+            "containerId": "693affd0-1c05-45c8-8cdb-6bd95df99bf6",
+            "name": "Create New Product",
+            "url": "localhost:8000/api/products",
+            "method": "POST",
+            "sortNum": 30000,
+            "created": "2023-06-25T11:42:25.761Z",
+            "modified": "2023-06-25T11:42:25.761Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "form": [
+                    {
+                        "name": "name",
+                        "value": "Handphone A"
+                    },
+                    {
+                        "name": "description",
+                        "value": "Deskripsi Handphone A"
+                    },
+                    {
+                        "name": "price",
+                        "value": "8000000"
+                    },
+                    {
+                        "name": "stock",
+                        "value": "23"
+                    },
+                    {
+                        "name": "categoryId",
+                        "value": "4"
+                    }
+                ],
+                "files": [
+                    {
+                        "name": "image",
+                        "value": "/run/user/1000/doc/31accfd2/Screenshot from 2023-05-29 11-20-48.png"
+                    }
+                ],
+                "type": "formdata"
+            },
+            "docs": ""
+        },
+        {
+            "_id": "f62d59f2-ae67-4794-b0a3-1f76233a04ad",
+            "colId": "836c895d-30f8-4685-b159-f77c7abc9d84",
+            "containerId": "693affd0-1c05-45c8-8cdb-6bd95df99bf6",
+            "name": "Get All Products",
+            "url": "localhost:8000/api/products",
+            "method": "GET",
+            "sortNum": 40000,
+            "created": "2023-06-25T11:42:25.762Z",
+            "modified": "2023-06-25T11:42:41.909Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "c6272dc6-2c0e-4ed1-9431-732c45fb3dc0",
+            "colId": "836c895d-30f8-4685-b159-f77c7abc9d84",
+            "containerId": "693affd0-1c05-45c8-8cdb-6bd95df99bf6",
+            "name": "Get Product By ID",
+            "url": "localhost:8000/api/products/2a401dd0-8bd4-4492-977e-0a222c5ef688",
+            "method": "GET",
+            "sortNum": 50000,
+            "created": "2023-06-25T11:42:25.763Z",
+            "modified": "2023-06-25T11:42:25.763Z",
+            "headers": [],
+            "params": [],
+            "docs": ""
+        },
+        {
+            "_id": "3a81d0b2-b632-4b62-a363-f3de554b9510",
+            "colId": "836c895d-30f8-4685-b159-f77c7abc9d84",
+            "containerId": "693affd0-1c05-45c8-8cdb-6bd95df99bf6",
+            "name": "Delete Product By Id",
+            "url": "localhost:8000/api/products/07c15d85-93c8-4f1e-b0d3-a5c299f2831a",
+            "method": "DELETE",
+            "sortNum": 60000,
+            "created": "2023-06-25T11:42:25.764Z",
+            "modified": "2023-06-25T11:45:45.942Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "f49910ef-035b-4dae-88d2-1637f57b542b",
+            "colId": "836c895d-30f8-4685-b159-f77c7abc9d84",
+            "containerId": "afe510c8-34f9-42c7-b0f2-b9930e6d80f7",
+            "name": "Get Current User",
+            "url": "localhost:8000/api/users/me",
+            "method": "GET",
+            "sortNum": 70000,
+            "created": "2023-06-25T11:42:25.765Z",
+            "modified": "2023-06-25T11:42:25.765Z",
+            "headers": [],
+            "params": [],
+            "docs": ""
+        },
+        {
+            "_id": "d97c6bae-c10b-4f6e-ad2e-90564cdb584b",
+            "colId": "836c895d-30f8-4685-b159-f77c7abc9d84",
+            "containerId": "afe510c8-34f9-42c7-b0f2-b9930e6d80f7",
+            "name": "Get Refresh Token",
+            "url": "localhost:8000/api/auth/refresh",
+            "method": "GET",
+            "sortNum": 80000,
+            "created": "2023-06-25T11:42:25.766Z",
+            "modified": "2023-06-25T11:42:25.766Z",
+            "headers": [],
+            "params": [],
+            "docs": ""
+        },
+        {
+            "_id": "e0ae9c4f-d699-4e6d-b356-cf0b7d7db774",
+            "colId": "836c895d-30f8-4685-b159-f77c7abc9d84",
+            "containerId": "afe510c8-34f9-42c7-b0f2-b9930e6d80f7",
+            "name": "Logout User",
+            "url": "localhost:8000/api/auth/logout",
+            "method": "GET",
+            "sortNum": 90000,
+            "created": "2023-06-25T11:42:25.767Z",
+            "modified": "2023-06-25T11:42:25.767Z",
+            "headers": [],
+            "params": [],
+            "docs": ""
+        },
+        {
+            "_id": "6fe7c22f-6b84-4668-8c4d-3e13deabdb1d",
+            "colId": "836c895d-30f8-4685-b159-f77c7abc9d84",
+            "containerId": "afe510c8-34f9-42c7-b0f2-b9930e6d80f7",
+            "name": "Login User",
+            "url": "localhost:8000/api/auth/login",
+            "method": "POST",
+            "sortNum": 100000,
+            "created": "2023-06-25T11:42:25.769Z",
+            "modified": "2023-06-25T11:42:50.282Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n\t\"email\": \"ajiprio@hotmail.com\",\n\t\"password\": \"mypassword123\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "afba622b-7948-4cbb-9784-5b9525ce8fc9",
+            "colId": "836c895d-30f8-4685-b159-f77c7abc9d84",
+            "containerId": "afe510c8-34f9-42c7-b0f2-b9930e6d80f7",
+            "name": "Register User",
+            "url": "localhost:8000/api/auth/register",
+            "method": "POST",
+            "sortNum": 110000,
+            "created": "2023-06-25T11:42:25.770Z",
+            "modified": "2023-06-25T11:42:25.770Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n\t\"name\": \"Aji Prio\",\n\t\"email\": \"ajiprio@hotmail.com\",\n\t\"password\": \"mypassword123\",\n\t\"passwordConfirm\": \"mypassword123\"\n}"
+            },
+            "docs": ""
+        },
+        {
+            "_id": "df802e42-9f53-40d7-9bc2-c8ed8c4b5ff6",
+            "colId": "836c895d-30f8-4685-b159-f77c7abc9d84",
+            "containerId": "afe510c8-34f9-42c7-b0f2-b9930e6d80f7",
+            "name": "Update Current User",
+            "url": "localhost:8000/api/users/me",
+            "method": "PUT",
+            "sortNum": 120000,
+            "created": "2023-06-25T11:42:25.771Z",
+            "modified": "2023-06-25T11:42:25.771Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n\t\"role\": \"seller\"\n}"
+            },
+            "docs": ""
+        }
+    ]
+}
