@@ -6,6 +6,7 @@ import {
   deleteProductHandler,
   getAllProductsHandler,
   getProductByIdHandler,
+  updateProductHandler,
 } from "../controllers/product.controller";
 import { upload } from "../middleware/upload";
 
@@ -16,7 +17,8 @@ router.use(deserializeUser, requireUser);
 router
   .get("/", getAllProductsHandler)
   .get("/:id", getProductByIdHandler)
+  .put("/:id", requireUserRole('seller'), updateProductHandler)
   .post("/", requireUserRole('seller'), upload.single("image"), createProductHandler)
-  .delete("/:id", deleteProductHandler);
+  .delete("/:id", requireUserRole('seller'), deleteProductHandler);
 
 export default router;
