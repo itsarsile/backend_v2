@@ -14,21 +14,19 @@ const storage = multer.diskStorage({
 export const upload = multer({
     storage: storage,
     limits: {
-      fileSize: 1024 * 1024 * 5, // 5MB file size limit
+      fileSize: 1024 * 1024 * 2,
       files: 1,
     },
     fileFilter: (req, file, cb) => {
-      // Check if the file's MIME type starts with 'image/'
       if (file.mimetype.startsWith('image/')) {
-        // Check if the file's extension is either 'jpg' or 'png'
         const fileExtension = file.originalname.split('.').pop();
         if (fileExtension === 'jpg' || fileExtension === 'png') {
-          cb(null, true); // Accept the file
+          cb(null, true);
         } else {
-          cb(new Error('Only JPEG and PNG images are allowed')); // Reject the file
+          cb(new Error('Only JPEG and PNG images are allowed'));
         }
       } else {
-        cb(new Error('Only images are allowed')); // Reject the file
+        cb(new Error('Only images are allowed'));
       }
     },
   });
