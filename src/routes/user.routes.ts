@@ -5,6 +5,7 @@ import { requireUser } from "../middleware/requireUser";
 import {
   createOrderHandler,
   deleteOrderHandler,
+  getOrderByIdHandler,
   getOrderHandler,
 } from "../controllers/order.controller";
 
@@ -17,6 +18,7 @@ router.get("/me", getMeHandler)
 
 router.post("/me/orders", createOrderHandler)
   .get("/me/orders", getOrderHandler)
-  .delete("/me/orders/:id", deleteOrderHandler);
+  .get("/me/orders/:id", getOrderByIdHandler)
+  .delete("/me/orders/:id", deleteOrderHandler)
 
 export default router;

@@ -1,4 +1,4 @@
-import { Prisma, PrismaClient } from "@prisma/client";
+import {  PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
@@ -41,9 +41,53 @@ export const createOrder = async (
   return order;
 };
 
+
+// export const updateOrderItems = async (orderId: string, orderItems: { productId: string; quantity: number }[]) => {
+//   const updatedOrder = await prisma.$transaction(async (prismaClient) => {
+//     const existingOrder = await prismaClient.order.findUnique({
+//       where: { id: orderId },
+//       include: { orderItems: true },
+//     });
+//     console.log(existingOrder)
+//     if (!existingOrder) {
+//       throw new Error("Order not found");
+//     }
+
+//     const updatedOrderItems = await prismaClient.orderItem.createMany({
+//       data: orderItems.map((item) => ({
+//         orderId,
+//         productId: item.productId,
+//         quantity: item.quantity,
+//       })),
+//     });
+
+//     const updatedOrder = {
+//       ...existingOrder,
+//       orderItems: updatedOrderItems,
+//     };
+
+//     return updatedOrder;
+//   });
+
+//   return updatedOrder;
+// };
+
+
 export const getOrders = async (userId: string) => {
   return await prisma.order.findMany({
     where: { userId },
+    include: {
+      orderItems: true,
+      address: true,
+    },
+  });
+};
+
+export const getOrderById = async (orderId: string) => {
+  return prisma.order.findUnique({
+    where: {
+      id: orderId,
+    },
     include: {
       orderItems: true,
       address: true,
@@ -64,4 +108,3 @@ export const deleteOrder = async (orderId: string) => {
     },
   });
 };
-
