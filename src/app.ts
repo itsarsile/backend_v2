@@ -11,26 +11,19 @@ import userRouter from "./routes/user.routes";
 import categoryRouter from "./routes/category.routes";
 import productRouter from "./routes/product.routes";
 import AppError from "./utils/appError";
-
+import helmet from 'helmet';
 validateEnv();
 
 const prisma = new PrismaClient();
 const app = express();
 
 async function bootstrap() {
-  // TEMPLATE ENGINE
-  app.set("view engine", "pug");
-  app.set("views", `${__dirname}/views`);
-
-  // MIDDLEWARE
-
-  // 1.Body Parser
   app.use(express.json({ limit: "10kb" }));
 
-  // 2. Cookie Parser
   app.use(cookieParser());
-
-  // 2. Cors
+  app.use(helmet({
+    xXssProtection: true
+  }))
   app.use(
     cors({
       origin: [config.get<string>("origin")],
@@ -38,10 +31,9 @@ async function bootstrap() {
     }),
   );
 
-  // 3. Logger
   if (process.env.NODE_ENV === "development") app.use(morgan("dev"));
 
-  // ROUTES
+  //* ROUTES
   app.use("/api/auth", authRouter);
   app.use("/api/categories", categoryRouter);
   app.use("/api/users", userRouter);
@@ -49,11 +41,11 @@ async function bootstrap() {
 
   app.use("/img", express.static('src/uploads'))
 
-  // Testing
-  app.get("/api/healthchecker", (_, res: Response) => {
+  // API TEST
+  app.get("/api/status", (_, res: Response) => {
     res.status(200).json({
       status: "success",
-      message: "Welcome to NodeJs with Prisma and PostgreSQL",
+      message: "API is Healthy!",
     });
   });
 
