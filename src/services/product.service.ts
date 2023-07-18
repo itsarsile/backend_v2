@@ -1,6 +1,5 @@
 import { Prisma, PrismaClient, Product } from "@prisma/client";
 import redisClient from "../utils/connectRedis";
-import config from "config";
 
 const prisma = new PrismaClient();
 const cacheKey = `Products`;
@@ -8,6 +7,7 @@ const cacheKey = `Products`;
 export const createProduct = async (
   input: Prisma.ProductCreateInput,
   categoryId: number,
+  userId: string,
 ) => {
   const createdProduct = await prisma.product.create({
     data: {
@@ -15,6 +15,7 @@ export const createProduct = async (
       category: {
         connect: { id: categoryId },
       },
+      User: { connect: { id: userId } },
     },
   }) as Product;
   redisClient.del(cacheKey);
@@ -28,14 +29,6 @@ export const getAllProducts = async (
   offset: number,
   limit: number,
 ) => {
-  const cacheKey =
-    `Products:${orderBy}:${orderByField}:${search}:${offset}:${limit}`;
-  const cachedProducts = await redisClient.get(cacheKey);
-
-  if (cachedProducts) {
-    const parsedProducts = JSON.parse(cachedProducts) as Product[];
-    return parsedProducts;
-  }
 
   const or: Prisma.ProductWhereInput = search
     ? {
@@ -62,9 +55,6 @@ export const getAllProducts = async (
     take: limit,
   });
 
-  await redisClient.set(cacheKey, JSON.stringify(products), {
-    EX: config.get<number>("redisCacheExpiresIn") * 60,
-  });
 
   return products;
 };
@@ -76,8 +66,24 @@ export const getProductById = async (productId: string) => {
     },
     include: {
       category: true,
-    },
+      User: {
+        select: {
+          name: true,
+        }
+      },
+    }
   }));
+};
+
+export const getProductByUser = async (userId: string) => {
+  const products = await prisma.user.findUnique({
+    where: { id: userId },
+    select: {
+      name: true,
+      products: true,
+    }
+  });
+  return products
 };
 
 export const updateProduct = async (

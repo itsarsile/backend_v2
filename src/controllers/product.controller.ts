@@ -6,6 +6,7 @@ import {
   deleteProduct,
   getAllProducts,
   getProductById,
+  getProductByUser,
   updateProduct,
 } from "../services/product.service";
 
@@ -16,16 +17,35 @@ export const createProductHandler = async (
 ) => {
   try {
     const image = req.file?.filename;
+    const userId = res.locals.user.id;
     const categoryId = Number(req.body.categoryId);
-    const product = await createProduct({
-      name: req.body.name,
-      description: req.body.description,
-      price: Number(req.body.price),
-      image: `http://${config.get<string>("db_host")}:${
-        config.get<string>("port")
-      }/img/${image}`,
-      stock: Number(req.body.stock),
-    }, categoryId);
+    const price = Number(req.body.price);
+    const stock = Number(req.body.stock);
+    const name = req.body.name;
+    if (!name) {
+      throw new Error("Product name is missing");
+    }
+
+    if (isNaN(price) || isNaN(stock)) {
+      throw new Error("Invalid price or stock value");
+    }
+
+    const product = await createProduct(
+      {
+        name,
+        description: req.body.description,
+        price,
+        image: `http://${config.get<string>("db_host")}:${
+          config.get<string>(
+            "port",
+          )
+        }/img/${image}`,
+        stock,
+      },
+      categoryId,
+      userId,
+    );
+
     res.status(201).json({
       status: "success",
       data: {
@@ -43,13 +63,14 @@ export const getAllProductsHandler = async (
   next: NextFunction,
 ) => {
   try {
-    const { orderBy, orderByField, search, page, limit} = req.query;
+    const { orderBy, orderByField, search, page, limit } = req.query;
     const pageNumber = parseInt(page as string, 10) || 1;
     const limitNumber = parseInt(limit as string, 10) || 10;
-    const offset = (pageNumber - 1) * limitNumber
+    const offset = (pageNumber - 1) * limitNumber;
     const products = await getAllProducts(
       orderBy as Prisma.SortOrder || undefined,
-      orderByField as string, search as string,
+      orderByField as string,
+      search as string,
       offset,
       limitNumber,
     );
@@ -79,6 +100,25 @@ export const getProductByIdHandler = async (
       },
     });
   } catch (err: any) {
+  }
+};
+
+export const getProductByUserHandler = async (
+  req: Request,
+  res: Response,  
+  next: NextFunction,
+) => {
+  try {
+    const userId = req.params.id;
+    const products = await getProductByUser(userId);
+    res.status(200).json({
+      status: "success",
+      data: {
+        products: products,
+      }
+    })
+  } catch (err: any) {
+    next(err);
   }
 };
 

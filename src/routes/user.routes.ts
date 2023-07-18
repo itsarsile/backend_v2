@@ -8,13 +8,16 @@ import {
   getOrderByIdHandler,
   getOrderHandler,
 } from "../controllers/order.controller";
+import { createProductHandler } from "../controllers/product.controller";
 
 const router = express.Router();
 
 router.use(deserializeUser, requireUser);
 
 router.get("/me", getMeHandler)
-  .put("/me", updateMeHandler);
+  .put("/me", updateMeHandler)
+
+router.post("/me/products", createProductHandler)
 
 router.post("/me/orders", createOrderHandler)
   .get("/me/orders", getOrderHandler)

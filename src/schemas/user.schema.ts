@@ -22,14 +22,14 @@ export const registerUserSchema = object({
       required_error: 'Please confirm your password',
     }),
     role: z.optional(z.nativeEnum(RoleEnumType)),
-    address: object({
-      street: string({ required_error: 'Street is required' }),
-      city: string({ required_error: 'City is required' }),
-      state: string({ required_error: 'State is required' }),
-      postalCode: string({ required_error: 'Postal code is required' }),
-      country: string({ required_error: 'Country is required' }),
-      userId: string().optional()
-    }),
+    // address: object({
+    //   street: string({ required_error: 'Street is required' }),
+    //   city: string({ required_error: 'City is required' }),
+    //   state: string({ required_error: 'State is required' }),
+    //   postalCode: string({ required_error: 'Postal code is required' }),
+    //   country: string({ required_error: 'Country is required' }),
+    //   userId: string().optional()
+    // }),
   }).refine((data) => data.password === data.passwordConfirm, {
     path: ['passwordConfirm'],
     message: 'Passwords do not match',

@@ -1,6 +1,6 @@
 import { createClient } from 'redis';
 
-const redisUrl = 'redis://localhost:6379';
+const redisUrl = 'redis://default:621a182bf4e143399497844a6901fd6f@cute-foxhound-44103.upstash.io:44103';
 
 const redisClient = createClient({
   url: redisUrl,
