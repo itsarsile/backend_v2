@@ -4,11 +4,10 @@
   "main": "src/app.ts",
   "license": "MIT",
   "scripts": {
-    "dev": "ts-node-dev --respawn --transpile-only --exit-child src/app.ts",
+    "start": "ts-node-dev --respawn --transpile-only --exit-child src/app.ts",
     "migrate": "npx prisma migrate dev --name user-entity && npx prisma generate",
     "db:push": "npx prisma db push",
-    "build": "tsc -p tsconfig.json",
-    "start": "node src/app.js"
+    "build": "tsc -p tsconfig.json"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
