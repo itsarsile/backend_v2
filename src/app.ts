@@ -65,7 +65,7 @@ async function bootstrap() {
     });
   });
 
-  const port = config.get<number>("port");
+  const port = config.get<number>("port") || 3000
   app.listen(port, () => {
     console.log(`Server on port: ${port}`);
   });
