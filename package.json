@@ -1,7 +1,7 @@
 {
   "name": "node_prisma",
   "version": "1.0.0",
-  "main": "build/src/app.js",
+  "main": "src/app.js",
   "license": "MIT",
   "scripts": {
     "start": "ts-node-dev --respawn --transpile-only --exit-child src/app.ts",
